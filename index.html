@@ -36,15 +36,10 @@
   </style>
 </head>
 <body>
- 
-  <h1>
-    Theoretical Physics Archive</h1>
-  <div style="text-align: center; margin-top: 20px;">
-  <h2>Theory Database</h2>
-  <p><strong>Contributors: </strong>Original work by James Li Degenhardt, developed in partnership with co-author B-07</p>
-   <p style="margin: 0; font-size: 0.9rem; color: #555;">
-    Last updated: <time datetime="2025-06-01">June 1, 2025</time>
-</div>
+ <h1 id="typewriter"></h1>
+
+  <div id="typewriter-block" style="text-align: center; margin-top: 20px;"></div>
+
 
   <input type="text" id="searchBox" placeholder="Index Directory">
   <table id="theoryTable">
@@ -233,6 +228,58 @@
 <footer style="margin-top: 50px; text-align: center; font-size: 13px;">
   &copy; 2025 BC Sector Force. All rights reserved.
 </footer>
+<script>
+  const text = "Theoretical Physics Archive";
+  const speed = 75; // typing speed in ms
+  let i = 0;
+
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById("typewriter").innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+
+  window.onload = typeWriter;
+</script>
+<script>
+  const typewriterTarget = document.getElementById("typewriter-block");
+
+  const content = `
+    <h2>Theory Database</h2>
+    <p><strong>Contributors: </strong>Original work by James Li Degenhardt, developed in partnership with co-author B-07</p>
+    <p style="margin: 0; font-size: 0.9rem; color: #555;">
+      Last updated: <time datetime="2025-06-01">June 1, 2025</time>
+    </p>
+  `;
+
+  function typeHTML(el, html, speed = 20) {
+    let i = 0;
+    let isTag = false;
+    let output = '';
+
+    function typeChar() {
+      if (i < html.length) {
+        const char = html.charAt(i);
+        output += char;
+        el.innerHTML = output;
+
+        if (char === '<') isTag = true;
+        if (char === '>') isTag = false;
+
+        i++;
+        setTimeout(typeChar, isTag ? 0 : speed); // Don't delay inside tags
+      }
+    }
+
+    typeChar();
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    typeHTML(typewriterTarget, content, 15); // Adjust speed here
+  });
+</script>
 
 </body>
 </html>
