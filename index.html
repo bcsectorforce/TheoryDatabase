@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Theoretical Physics Database</title>
+  <style>
+    body {
+      background: #0b0c10;
+      color: #c5c6c7;
+      font-family: monospace;
+      padding: 20px;
+    }
+    h1 {
+      color: #66fcf1;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      background: #1f2833;
+      color: white;
+      border: 1px solid #45a29e;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #45a29e;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #1f2833;
+    }
+  </style>
+</head>
+<body>
+ 
+  <h1>
+    Theoretical Physics Archive</h1>
+  <div style="text-align: center; margin-top: 20px;">
+  <h2>Theory Database</h2>
+  <p><strong>Contributors: </strong>Original work by James Li Degenhardt, developed in partnership with co-author B-07</p>
+   <p style="margin: 0; font-size: 0.9rem; color: #555;">
+    Last updated: <time datetime="2025-06-01">June 1, 2025</time>
+</div>
+
+  <input type="text" id="searchBox" placeholder="Index Directory">
+  <table id="theoryTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Papers Published</th>
+        <th>Years Studied</th>
+        <th>Experimental Support (1–5)</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const theories = [
+      { name: "String Theory", status: "Ongoing", papers_published: 11000, years_studied: 55, experimental_support: 2 },
+      { name: "Superstring Theory", status: "Ongoing", papers_published: 8700, years_studied: 40, experimental_support: 2 },
+      { name: "M-Theory", status: "Theoretical", papers_published: 6200, years_studied: 30, experimental_support: 1 },
+      { name: "ST-Membrane Theory", status: "Experimental", papers_published: 500, years_studied: 5, experimental_support: 1 },
+      { name: "Triginomic ST-Brane Theory", status: "Theoretical", papers_published: 150, years_studied: 2, experimental_support: 1 },
+      { name: "Orinomic ST-Brane Theory", status: "Theoretical", papers_published: 110, years_studied: 2, experimental_support: 1 },
+      { name: "Phoamanotic ST-Brane Theory", status: "Theoretical", papers_published: 90, years_studied: 2, experimental_support: 1 },
+      { name: "Loop Quantum Gravity", status: "Ongoing", papers_published: 3500, years_studied: 35, experimental_support: 3 },
+      { name: "Causal Dynamical Triangulation", status: "Ongoing", papers_published: 900, years_studied: 22, experimental_support: 2 },
+      { name: "Quantum Field Theory", status: "Established", papers_published: 23000, years_studied: 80, experimental_support: 5 },
+      { name: "Quantum Electrodynamics", status: "Established", papers_published: 18000, years_studied: 85, experimental_support: 5 },
+      { name: "Quantum Chromodynamics", status: "Established", papers_published: 12000, years_studied: 60, experimental_support: 5 },
+      { name: "Standard Model", status: "Established", papers_published: 20000, years_studied: 70, experimental_support: 5 },
+      { name: "Chaos Theory", status: "Cross-disciplinary", papers_published: 9000, years_studied: 60, experimental_support: 4 },
+      { name: "Phenomenological Quantum Gravity", status: "Theoretical", papers_published: 700, years_studied: 15, experimental_support: 1 },
+      { name: "Field Theory", status: "Established", papers_published: 16000, years_studied: 90, experimental_support: 5 },
+      { name: "Explicit Symmetry Breaking", status: "Ongoing", papers_published: 2100, years_studied: 45, experimental_support: 4 },
+      { name: "Spontaneous Symmetry Breaking", status: "Established", papers_published: 2800, years_studied: 50, experimental_support: 5 },
+      { name: "Higgs Mechanism", status: "Established", papers_published: 3400, years_studied: 55, experimental_support: 5 },
+      { name: "Goldstone Bosons", status: "Ongoing", papers_published: 1800, years_studied: 50, experimental_support: 3 },
+      { name: "AdS/CFT Correspondence", status: "Theoretical", papers_published: 4100, years_studied: 25, experimental_support: 2 },
+      { name: "Supersymmetry (SUSY)", status: "Hypothetical", papers_published: 8000, years_studied: 40, experimental_support: 1 },
+      { name: "Twistor Theory", status: "Theoretical", papers_published: 1200, years_studied: 30, experimental_support: 1 },
+      { name: "Noncommutative Geometry", status: "Theoretical", papers_published: 900, years_studied: 20, experimental_support: 1 },
+      { name: "Conformal Field Theory", status: "Ongoing", papers_published: 2500, years_studied: 35, experimental_support: 3 },
+      { name: "Topological Quantum Field Theory", status: "Theoretical", papers_published: 1400, years_studied: 25, experimental_support: 2 },
+      { name: "Quantum Gravity Phenomenology", status: "Ongoing", papers_published: 850, years_studied: 18, experimental_support: 2 },
+      { name: "Asymptotic Safety", status: "Theoretical", papers_published: 750, years_studied: 20, experimental_support: 1 },
+      { name: "Chern-Simons Theory", status: "Established", papers_published: 1800, years_studied: 40, experimental_support: 4 },
+      { name: "Holographic Principle", status: "Theoretical", papers_published: 1300, years_studied: 25, experimental_support: 2 },
+      { name: "Quantum Decoherence Theory", status: "Ongoing", papers_published: 2300, years_studied: 30, experimental_support: 3 },
+      { name: "Grand Unified Theory (GUT)", status: "Hypothetical", papers_published: 3200, years_studied: 50, experimental_support: 1 },
+      { name: "Supersymmetric Quantum Mechanics", status: "Theoretical", papers_published: 1100, years_studied: 22, experimental_support: 2 },
+      { name: "Kaluza-Klein Theory", status: "Theoretical", papers_published: 1400, years_studied: 35, experimental_support: 1 },
+      { name: "Double Field Theory", status: "Theoretical", papers_published: 900, years_studied: 10, experimental_support: 1 },
+      { name: "Topological String Theory", status: "Theoretical", papers_published: 600, years_studied: 12, experimental_support: 1 },
+      { name: "Mirror Symmetry", status: "Theoretical", papers_published: 1100, years_studied: 20, experimental_support: 1 },
+      { name: "Quantum Gravity with Torsion", status: "Theoretical", papers_published: 450, years_studied: 15, experimental_support: 1 },
+      { name: "Higher Spin Theory", status: "Theoretical", papers_published: 700, years_studied: 18, experimental_support: 1 },
+      { name: "Spin Foam Models", status: "Ongoing", papers_published: 1100, years_studied: 22, experimental_support: 2 },
+      { name: "Dynamical Triangulation Models", status: "Ongoing", papers_published: 800, years_studied: 20, experimental_support: 2 },
+      { name: "Effective Field Theory", status: "Established", papers_published: 4500, years_studied: 40, experimental_support: 4 },
+      { name: "Gauge/Gravity Duality", status: "Theoretical", papers_published: 3200, years_studied: 25, experimental_support: 2 },
+      { name: "Entropic Gravity", status: "Theoretical", papers_published: 600, years_studied: 12, experimental_support: 1 },
+      { name: "Nonlocal Gravity", status: "Theoretical", papers_published: 500, years_studied: 10, experimental_support: 1 },
+      { name: "Supergravity", status: "Theoretical", papers_published: 2100, years_studied: 35, experimental_support: 2 },
+      { name: "Quantum Information Theory", status: "Ongoing", papers_published: 6200, years_studied: 30, experimental_support: 4 },
+      { name: "String Field Theory", status: "Theoretical", papers_published: 900, years_studied: 25, experimental_support: 1 },
+      { name: "Black Hole Thermodynamics", status: "Established", papers_published: 2600, years_studied: 45, experimental_support: 4 },
+      { name: "Loop Quantum Cosmology", status: "Ongoing", papers_published: 1400, years_studied: 18, experimental_support: 2 },
+      { name: "Emergent Gravity", status: "Theoretical", papers_published: 1100, years_studied: 15, experimental_support: 1 },
+      { name: "Nonperturbative Quantum Gravity", status: "Theoretical", papers_published: 600, years_studied: 12, experimental_support: 1 },
+      { name: "Twisted K-theory", status: "Theoretical", papers_published: 350, years_studied: 10, experimental_support: 1 },{ name: "Asymptotic Freedom", status: "Established", papers_published: 3000, years_studied: 45, experimental_support: 5 },
+      { name: "Axion Theory", status: "Hypothetical", papers_published: 2100, years_studied: 25, experimental_support: 1 },
+      { name: "Baryogenesis Models", status: "Ongoing", papers_published: 900, years_studied: 15, experimental_support: 2 },
+      { name: "BF Theory", status: "Theoretical", papers_published: 800, years_studied: 20, experimental_support: 1 },
+      { name: "Big Bounce Theory", status: "Theoretical", papers_published: 700, years_studied: 15, experimental_support: 1 },
+      { name: "Brane Cosmology", status: "Theoretical", papers_published: 1200, years_studied: 20, experimental_support: 1 },
+      { name: "Causal Set Theory", status: "Theoretical", papers_published: 600, years_studied: 18, experimental_support: 1 },
+      { name: "Classical Gravity", status: "Established", papers_published: 25000, years_studied: 150, experimental_support: 5 },
+      { name: "Conformal Gravity", status: "Theoretical", papers_published: 900, years_studied: 20, experimental_support: 1 },
+      { name: "Dark Energy Models", status: "Ongoing", papers_published: 3500, years_studied: 20, experimental_support: 3 },
+      { name: "Dark Matter Theories", status: "Ongoing", papers_published: 4200, years_studied: 30, experimental_support: 2 },
+      { name: "D-brane Theory", status: "Theoretical", papers_published: 1000, years_studied: 22, experimental_support: 1 },
+      { name: "Effective Action Formalism", status: "Established", papers_published: 1500, years_studied: 35, experimental_support: 4 },
+      { name: "Entanglement Entropy", status: "Ongoing", papers_published: 2800, years_studied: 20, experimental_support: 3 },
+      { name: "Euclidean Quantum Gravity", status: "Theoretical", papers_published: 1200, years_studied: 25, experimental_support: 1 },
+      { name: "F-theory", status: "Theoretical", papers_published: 1500, years_studied: 18, experimental_support: 1 },
+      { name: "Faddeev-Popov Ghosts", status: "Established", papers_published: 1400, years_studied: 30, experimental_support: 4 },
+      { name: "Gauge Theory", status: "Established", papers_published: 18000, years_studied: 80, experimental_support: 5 },
+      { name: "Grand Symmetry Models", status: "Hypothetical", papers_published: 700, years_studied: 20, experimental_support: 1 },
+      { name: "Higgs Field Theory", status: "Established", papers_published: 3500, years_studied: 50, experimental_support: 5 },
+      { name: "Holographic Entanglement", status: "Theoretical", papers_published: 900, years_studied: 15, experimental_support: 1 },
+      { name: "Inflationary Cosmology", status: "Established", papers_published: 11000, years_studied: 45, experimental_support: 4 },
+      { name: "Kaluza-Klein Gravity", status: "Theoretical", papers_published: 900, years_studied: 20, experimental_support: 1 },
+      { name: "Loop Quantum Black Holes", status: "Theoretical", papers_published: 1200, years_studied: 18, experimental_support: 1 },
+      { name: "Massive Gravity", status: "Theoretical", papers_published: 750, years_studied: 15, experimental_support: 1 },
+      { name: "Matrix Theory", status: "Theoretical", papers_published: 1000, years_studied: 22, experimental_support: 1 },
+      { name: "Neutrino Oscillation Models", status: "Established", papers_published: 4500, years_studied: 40, experimental_support: 5 },
+      { name: "Non-Abelian Gauge Theory", status: "Established", papers_published: 15000, years_studied: 70, experimental_support: 5 },
+      { name: "Nonlinear Sigma Models", status: "Theoretical", papers_published: 800, years_studied: 18, experimental_support: 1 },
+      { name: "N=4 Supersymmetric Yang-Mills", status: "Theoretical", papers_published: 1600, years_studied: 25, experimental_support: 1 },
+      { name: "Perturbative String Theory", status: "Established", papers_published: 5000, years_studied: 45, experimental_support: 2 },
+      { name: "Quantum Cosmology", status: "Theoretical", papers_published: 2200, years_studied: 30, experimental_support: 2 },
+      { name: "Quantum Hall Effect", status: "Established", papers_published: 6500, years_studied: 40, experimental_support: 5 },
+      { name: "Quantum Loop Models", status: "Theoretical", papers_published: 800, years_studied: 18, experimental_support: 1 },
+      { name: "Renormalization Group", status: "Established", papers_published: 10000, years_studied: 60, experimental_support: 5 },
+      { name: "Seiberg-Witten Theory", status: "Theoretical", papers_published: 1400, years_studied: 22, experimental_support: 1 },
+      { name: "Soliton Theory", status: "Theoretical", papers_published: 1200, years_studied: 30, experimental_support: 2 },
+      { name: "Spontaneous Lorentz Symmetry Breaking", status: "Theoretical", papers_published: 700, years_studied: 12, experimental_support: 1 },
+      { name: "String Phenomenology", status: "Ongoing", papers_published: 1300, years_studied: 20, experimental_support: 2 },
+      { name: "Superconformal Field Theory", status: "Theoretical", papers_published: 1000, years_studied: 20, experimental_support: 1 },
+      { name: "Superstring Compactification", status: "Theoretical", papers_published: 1800, years_studied: 25, experimental_support: 1 },
+      { name: "Tensor Network Theory", status: "Ongoing", papers_published: 900, years_studied: 15, experimental_support: 2 },
+      { name: "Topological Insulators", status: "Established", papers_published: 4000, years_studied: 20, experimental_support: 5 },
+      { name: "Topos Theory in Physics", status: "Theoretical", papers_published: 600, years_studied: 10, experimental_support: 1 },
+      { name: "Twistor String Theory", status: "Theoretical", papers_published: 900, years_studied: 15, experimental_support: 1 },
+      { name: "Vasiliev Theory", status: "Theoretical", papers_published: 700, years_studied: 12, experimental_support: 1 },
+      { name: "Weak Gravity Conjecture", status: "Theoretical", papers_published: 500, years_studied: 8, experimental_support: 1 },
+      { name: "Witten Index", status: "Established", papers_published: 900, years_studied: 30, experimental_support: 4 },
+      { name: "Yang-Mills Theory", status: "Established", papers_published: 20000, years_studied: 75, experimental_support: 5 },
+      { name: "Zeta Function Regularization", status: "Theoretical", papers_published: 400, years_studied: 10, experimental_support: 1 },
+      { name: "Zero-Point Energy Models", status: "Theoretical", papers_published: 700, years_studied: 15, experimental_support: 1 },
+      { name: "Quantum Zeno Effect", status: "Confirmed", papers_published: 1200, years_studied: 40, experimental_support: 5 },
+      { name: "Dynamical Systems Theory", status: "Confirmed", papers_published: 4000, years_studied: 60, experimental_support: 5 },
+      { name: "Kinetic Theory of Gases", status: "Confirmed", papers_published: 8000, years_studied: 100, experimental_support: 5 },
+      { name: "Percolation Theory", status: "Confirmed", papers_published: 1500, years_studied: 40, experimental_support: 5 },
+      { name: "Spin Glass Theory", status: "Ongoing", papers_published: 1200, years_studied: 40, experimental_support: 3 },
+      { name: "Topological Quantum Field Theory", status: "Ongoing", papers_published: 1800, years_studied: 30, experimental_support: 2 },
+      { name: "Mean Field Theory", status: "Confirmed", papers_published: 6000, years_studied: 80, experimental_support: 5 },
+      { name: "Conformal Field Theory", status: "Ongoing", papers_published: 3000, years_studied: 40, experimental_support: 3 },
+      { name: "Stochastic Resonance Theory", status: "Confirmed", papers_published: 900, years_studied: 30, experimental_support: 4 },
+      { name: "Superfluidity Theory", status: "Confirmed", papers_published: 4500, years_studied: 60, experimental_support: 5 },
+      { name: "Hydrodynamic Stability Theory", status: "Confirmed", papers_published: 3500, years_studied: 60, experimental_support: 5 },
+      { name: "Magnetohydrodynamics (MHD)", status: "Confirmed", papers_published: 7000, years_studied: 70, experimental_support: 5 },
+      { name: "Bose-Einstein Condensation", status: "Confirmed", papers_published: 6000, years_studied: 40, experimental_support: 5 },
+      { name: "Anderson Localization Theory", status: "Confirmed", papers_published: 2200, years_studied: 50, experimental_support: 5 },
+      { name: "Wormhole Theory", status: "Hypothetical", papers_published: 1200, years_studied: 50, experimental_support: 0 },
+      { name: "Quantum Walk Theory", status: "Ongoing", papers_published: 900, years_studied: 25, experimental_support: 2 },
+      { name: "Nambu-Goldstone Boson Theory", status: "Confirmed", papers_published: 3500, years_studied: 50, experimental_support: 5 },
+      { name: "Renormalization Group Theory", status: "Confirmed", papers_published: 8000, years_studied: 70, experimental_support: 5 },
+      { name: "Density Functional Theory", status: "Confirmed", papers_published: 12000, years_studied: 60, experimental_support: 5 },
+      { name: "Hydrogen Atom Model (Bohr Model)", status: "Historical", papers_published: 7000, years_studied: 110, experimental_support: 3 },
+      { name: "Optical Coherence Theory", status: "Confirmed", papers_published: 2500, years_studied: 50, experimental_support: 5 },
+      { name: "Exciton Theory", status: "Confirmed", papers_published: 3000, years_studied: 50, experimental_support: 5 },
+      { name: "Quantum Hall Effect Theory", status: "Confirmed", papers_published: 4000, years_studied: 40, experimental_support: 5 },
+      { name: "Chiral Symmetry Breaking", status: "Confirmed", papers_published: 3000, years_studied: 50, experimental_support: 5 },
+      { name: "Berry Phase Theory", status: "Confirmed", papers_published: 3500, years_studied: 40, experimental_support: 5 },
+      { name: "Superconductivity Theory", status: "Confirmed", papers_published: 15000, years_studied: 80, experimental_support: 5 },
+      { name: "Quantum Error Correction Theory", status: "Ongoing", papers_published: 4000, years_studied: 20, experimental_support: 4 },
+      { name: "Fractal Geometry Theory", status: "Confirmed", papers_published: 2000, years_studied: 40, experimental_support: 5 },
+      { name: "Soliton Theory", status: "Confirmed", papers_published: 2500, years_studied: 50, experimental_support: 5 },
+      { name: "Statistical Mechanics", status: "Confirmed", papers_published: 20000, years_studied: 100, experimental_support: 5 },
+      { name: "Hawking Radiation Theory", status: "Ongoing", papers_published: 3500, years_studied: 40, experimental_support: 3 },
+      { name: "Relativistic Quantum Mechanics", status: "Confirmed", papers_published: 10000, years_studied: 80, experimental_support: 5 },
+      { name: "Magnetic Monopole Theory", status: "Hypothetical", papers_published: 1200, years_studied: 50, experimental_support: 0 },
+      { name: "Bohmian Mechanics", status: "Ongoing", papers_published: 2000, years_studied: 60, experimental_support: 2 },
+      { name: "Path Integral Formulation", status: "Confirmed", papers_published: 11000, years_studied: 70, experimental_support: 5 },
+      { name: "Symmetry Breaking Theory", status: "Confirmed", papers_published: 7000, years_studied: 60, experimental_support: 5 },
+      { name: "Nuclear Shell Model", status: "Confirmed", papers_published: 6000, years_studied: 70, experimental_support: 5 },
+      { name: "Lattice Gauge Theory", status: "Ongoing", papers_published: 3000, years_studied: 40, experimental_support: 3 },
+      { name: "Electroweak Symmetry Breaking", status: "Confirmed", papers_published: 4500, years_studied: 50, experimental_support: 5 },
+      { name: "Casimir Effect Theory", status: "Confirmed", papers_published: 2500, years_studied: 70, experimental_support: 5 }
+    ];
+
+    const tbody = document.querySelector("#theoryTable tbody");
+    function renderTable(filter = "") {
+      tbody.innerHTML = "";
+      theories.filter(t => t.name.toLowerCase().includes(filter.toLowerCase()))
+        .forEach(t => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${t.name}</td>
+            <td>${t.status}</td>
+            <td>${t.papers_published}</td>
+            <td>${t.years_studied}</td>
+            <td>${t.experimental_support}</td>
+          `;
+          tbody.appendChild(row);
+        });
+    }
+
+    document.getElementById("searchBox").addEventListener("input", (e) => {
+      renderTable(e.target.value);
+    });
+
+    renderTable();
+  </script>
+<footer style="margin-top: 50px; text-align: center; font-size: 13px;">
+  &copy; 2025 BC Sector Force. All rights reserved.
+</footer>
+
+</body>
+</html>
